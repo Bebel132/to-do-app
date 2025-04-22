@@ -24,7 +24,7 @@ export const MenuOpt = ({paginaAtual, paginaAlvo, link} : MenuOptProps) => {
     return (
         <>
             <Button
-                id="basic-button"
+                variant="outlined"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
@@ -33,7 +33,6 @@ export const MenuOpt = ({paginaAtual, paginaAlvo, link} : MenuOptProps) => {
                 {paginaAtual}
             </Button>
             <Menu
-                id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}

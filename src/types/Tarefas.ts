@@ -1,10 +1,10 @@
 import { Categoria } from "./Categoria"
 
 export interface Tarefa {
-    Id: number
+    Id?: number
     Titulo: string
     Desc: string
     Status: boolean
     CategoriaId: number
-    Categoria: Categoria
+    Categoria?: Categoria
 }
