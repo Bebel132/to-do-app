@@ -8,9 +8,21 @@ interface tabelaProps {
     tarefas?: Tarefa[],
     categorias?: Categoria[],
     fetch?: () => Promise<void>,
+    handleOpen: Function,
+    setAcao: Function,
+    setTarefaEdit?: Function
+    setCategoriaEdit?: Function
 }
 
-export const Tabela = ({tarefas, categorias, fetch} : tabelaProps) => {
+export const Tabela = ({
+            tarefas, 
+            categorias, 
+            fetch, 
+            handleOpen, 
+            setAcao,
+            setTarefaEdit,
+            setCategoriaEdit
+        } : tabelaProps) => {
     const handleDelete = async (id: number) => {
         tarefas ? await deleteTarefa(id) : await deleteCategoria(id);
         fetch && await fetch();
@@ -36,8 +48,24 @@ export const Tabela = ({tarefas, categorias, fetch} : tabelaProps) => {
                                     <TableCell>{tarefa.Desc}</TableCell>
                                     <TableCell>{tarefa.Categoria!.Titulo}</TableCell>
                                     <TableCell sx={{float: "right"}}>
-                                        <Button variant="contained" sx={{background: '#ff3535', mr: 3}} onClick={() => handleDelete(tarefa.Id!)}>Apagar</Button>
-                                        <Button variant="contained" sx={{background: '#3598ff'}} onClick={() => handleDelete(tarefa.Id!)}>Editar</Button>
+                                        <Button 
+                                            variant="contained" 
+                                            sx={{background: '#ff3535', mr: 3}} 
+                                            onClick={() => handleDelete(tarefa.Id!)}
+                                        >
+                                            Apagar
+                                        </Button>
+                                        <Button 
+                                            variant="contained" 
+                                            sx={{background: '#3598ff'}} 
+                                            onClick={() => {
+                                                handleOpen();
+                                                setAcao("editar");
+                                                setTarefaEdit && setTarefaEdit(tarefa)
+                                            }}
+                                        >
+                                            Editar
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -55,7 +83,25 @@ export const Tabela = ({tarefas, categorias, fetch} : tabelaProps) => {
                             {categorias?.map(categoria => (
                                 <TableRow>
                                     <TableCell>{categoria.Titulo}</TableCell>
-                                    <TableCell><Button variant="contained" sx={{background: '#ff3535', float: "right"}} onClick={() => handleDelete(categoria.Id!)}>Apagar</Button></TableCell>
+                                    <TableCell sx={{float: "right"}}>
+                                        <Button 
+                                            variant="contained" 
+                                            sx={{background: '#ff3535', mr: 3}} 
+                                            onClick={() => handleDelete(categoria.Id!)}
+                                        >
+                                            Apagar
+                                        </Button>
+                                        <Button 
+                                            variant="contained" 
+                                            sx={{background: '#3598ff'}} 
+                                            onClick={() => {
+                                                handleOpen();
+                                                setAcao("editar");
+                                                setCategoriaEdit && setCategoriaEdit(categoria)}}
+                                        >
+                                            Editar
+                                        </Button>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

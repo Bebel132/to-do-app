@@ -9,6 +9,8 @@ import { Tarefa } from "../types/Tarefas";
 
 export const Tarefas = () => {
     const [tarefas, setTarefas] = useState<Tarefa[] | null>(null);
+    const [tarefaEdit, setTarefaEdit] = useState<Tarefa | null>(null);
+    const [acao, setAcao] = useState<"criar" | "editar">("criar");
     const categorias = UseCategorias();
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -26,8 +28,14 @@ export const Tarefas = () => {
         <>
             <Box textAlign='center'>
                 <MenuOpt paginaAtual="Tarefas" paginaAlvo="Categorias" link="/Categorias" />
-                <Tabela tarefas={tarefas || undefined} fetch={fetchTarefas}/>
-                <Button onClick={handleOpen} variant="contained">novo</Button>
+                <Tabela 
+                    tarefas={tarefas || undefined}
+                    handleOpen={handleOpen}
+                    setAcao={setAcao}
+                    fetch={fetchTarefas}
+                    setTarefaEdit={setTarefaEdit}
+                />
+                <Button onClick={() => {handleOpen(), setAcao("criar")}} variant="contained">novo</Button>
             </Box>
             <Modal
                 open={open}
@@ -46,7 +54,14 @@ export const Tarefas = () => {
                     boxShadow: 24,
                     p: 4,
                 }}>
-                    <Formulario tipo="tarefa" categorias={categorias || undefined} fetch={fetchTarefas} handleClose={handleClose}/>
+                    <Formulario 
+                        tipo="tarefa" 
+                        acao={acao} 
+                        tarefaEdit={tarefaEdit || undefined}
+                        categorias={categorias || undefined} 
+                        fetch={fetchTarefas} 
+                        handleClose={handleClose}
+                    />
                 </Box>
             </Modal>
         </>

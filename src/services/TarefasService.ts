@@ -10,16 +10,17 @@ const postTarefa = async ({Titulo, Desc, CategoriaId} : Tarefa) => {
     await api.post(`/Tarefas?Titulo=${Titulo}&Desc=${Desc}&Status=true&CategoriaId=${CategoriaId}`);
 }
 
+const putTarefa = async ({Id, Titulo, Desc, CategoriaId} : Tarefa) => {
+    await api.put(`/Tarefas/${Id}?Id=${Id}&Titulo=${Titulo}&Desc=${Desc}&Status=true&CategoriaId=${CategoriaId}`);
+}
+
 const deleteTarefa = async (id : number) => {
-    try {
-        await api.delete(`/Tarefas/${id}`);
-    } catch (err) {
-        console.log(err);
-    }
+    await api.delete(`/Tarefas/${id}`);
 }
 
 export {
     getTarefas,
     postTarefa,
+    putTarefa,
     deleteTarefa
 }

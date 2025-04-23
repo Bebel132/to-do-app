@@ -2,28 +2,25 @@ import { Categoria } from "../types/Categoria";
 import { api } from "./Api";
 
 const getCategorias = async (): Promise<Categoria[]> => {
-    const response = await api.get('/Categorias')
+    const response = await api.get('/Categorias');
     return response.data.value;
 }
 
 const postCategoria = async (titulo : string) => {
-    try {
-        await api.post(`/Categorias?Titulo=${titulo}`)
-    } catch (err) {
-        console.log(err)
-    }
+    await api.post(`/Categorias?Titulo=${titulo}`);
+}
+
+const putCategoria = async ({Id, Titulo} : Categoria) => {
+    await api.put(`/Categorias/${Id}?Id=${Id}&Titulo=${Titulo}`)
 }
 
 const deleteCategoria = async (id : number) => {
-    try {
-        await api.delete(`/Categorias/${id}`);
-    } catch (err) {
-        console.log(err)
-    }
+    await api.delete(`/Categorias/${id}`);
 }
 
 export {
     getCategorias,
     postCategoria,
+    putCategoria,
     deleteCategoria
 }
